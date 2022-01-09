@@ -71,11 +71,13 @@ public class PhonebookController extends HttpServlet {
 			response.sendRedirect("/phonebook2/pbc?action=list");
 			
 		}else if("delete".equals(act)){
+			System.out.println("action=delete");
 			
 			//PhoneDao 메모리 로딩
 			PhoneDao phoneDao = new PhoneDao();
 			
 			//Request class에 있는 getParameter 메소드로 파라미터 값을 받아온다.(파라미터 값은 무조건 String이므로 자료형 변환 필요)
+			//id라는 이름을 붙여준 파라미터 값을 받아온 뒤 자료형 변환 후 personId라는 이름을 지어줌
 			int personId = Integer.parseInt(request.getParameter("id"));
 			
 			//삭제
@@ -86,8 +88,42 @@ public class PhonebookController extends HttpServlet {
 			
 			
 		}else if("update".equals(act)){
+			System.out.println("action=update");
+			
+			//PhoneDao 메모리 로딩(객체 생성)
+			PhoneDao phoneDao = new PhoneDao();
+			
+			//Request class에 있는 getParameter 메소드로 파라미터 값을 받아온다.
+			String name = request.getParameter("name");
+			String hp = request.getParameter("hp");
+			String company = request.getParameter("company");
+			int personId = Integer.parseInt(request.getParameter("id"));
+			
+			//전송된 값(파라미터)을 Vo 객체에 담는다.
+			PersonVo personVo = new PersonVo(personId, name, hp, company);
+			
+			//수정
+			phoneDao.personUpdate(personVo);
+			
+			//redirect
+			response.sendRedirect("/phonebook2/pbc?action=list");
 			
 		}else if("updateForm".equals(act)){
+			System.out.println("action=updateForm");
+			
+			//id라는 이름의 파라미터를 받아온 뒤 형변환
+			int personId = Integer.parseInt(request.getParameter("id"));
+			
+			PhoneDao phoneDao = new PhoneDao();
+			//getPerson(1인) 메소드 호출, PersonVo에 담기
+			PersonVo personVo = phoneDao.getPerson(personId); 
+			
+			//attribute를 이용해 request에 넣기
+			request.setAttribute("pVo", personVo); 
+			
+			//forward
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/updateForm.jsp");
+			rd.forward(request, response);
 			
 		}else {
 			System.out.println("파라미터 값 없음");

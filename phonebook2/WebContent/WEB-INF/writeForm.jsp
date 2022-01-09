@@ -17,7 +17,8 @@
 			이름(name): <input type="text" name="name" value=""> <br>
 			핸드폰(hp): <input type="text" name="hp" value=""> <br>
 			회사(company): <input type="text" name="company" value=""> <br>
-			<input type="text" name="action" value="write">
+			<!-- 데이터 이름 name을 action으로 하고 value(초기값)을 write로 준 채 pbc에 전달했으므로 pbc에서 action=write로 처리, write 과정 진행 -->
+			<input type="hidden" name="action" value="write">
 			<button type="submit">전송</button>
 		</form>
 </body>

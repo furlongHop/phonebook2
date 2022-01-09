@@ -19,7 +19,7 @@
 </style>
 </head>
 <body>
-	<h1>[Phonebook1]</h1>
+	<h1>[Phonebook2]</h1>
 
 	<h2>전화번호 수정폼</h2>
 
